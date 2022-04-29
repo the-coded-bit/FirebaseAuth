@@ -1,6 +1,24 @@
-import Head from 'next/head'
+import Head from 'next/head';
+import { useEffect, useContext } from 'react';
+import { authContext } from '../contexts/authWrapper';
 
 export default function Home() {
+
+  const { authUser, logout } = useContext(authContext);
+
+  useEffect(() => {
+    console.log('use effect of /');
+    console.log('printing user from / =', authUser);
+  }, []);
+
+  //handle logout
+  const handleLogout = async () => {
+       if(authUser){
+         await logout();
+       }
+  }
+
+  console.log('render of / called');
   return (
     <div>
       <Head>
@@ -10,6 +28,7 @@ export default function Home() {
       </Head>
       <section>
         Main page
+        <button onClick={handleLogout}>Sign Out</button>
       </section>
     </div>
   )
